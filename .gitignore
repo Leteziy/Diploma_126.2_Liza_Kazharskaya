@@ -1,0 +1,29 @@
+# Секретные данные и локальные настройки
+.env
+
+# Кэш Python и тестов
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Настройки сред разработки (IDE)
+.vscode/
+.idea/
+
+# Бинарные файлы и исполняемые файлы
+*.exe
+*.bin
+chromedriver
+
+# Локальные отчеты и результаты тестов
+allure-results/
+allure-report/
+
+# Виртуальное окружение Python
+venv/
+.venv/
+env/
+
+# Системный мусор операционных систем
+.DS_Store
+Thumbs.db
