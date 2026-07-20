@@ -9,11 +9,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 class CartCleanPage:
     """Класс для управления товарами в корзине и её полной очистки."""
 
-    def __init__(self, driver: WebDriver, search_url: str, cart_url: str) -> None:
+    def __init__(self, driver: WebDriver, search_url: str) -> None:
         """Инициализация драйвера, URL-адресов и явных ожиданий."""
         self.driver: WebDriver = driver
         self.search_url: str = search_url
-        self.cart_url: str = cart_url
         self.wait: WebDriverWait = WebDriverWait(self.driver, 20)
 
     @allure.step("Открыть страницу результатов поиска с товаром")
@@ -34,10 +33,13 @@ class CartCleanPage:
         self.wait.until(EC.element_to_be_clickable(buy_button))
         buy_button.click()
 
-    @allure.step("Перейти на страницу корзины")
-    def open_cart_page(self) -> None:
-        """Переходит по URL непосредственно в корзину."""
-        self.driver.get(self.cart_url)
+    @allure.step("Перейти в корзину кликом по кнопке в шапке сайта")
+    def click_cart_icon(self) -> None:
+        """Находит иконку корзины в верхней панели сайта по data-testid и кликает по ней."""
+        cart_icon = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Корзина')]"))
+        )
+        cart_icon.click()
 
     @allure.step("Кликнуть по кнопке 'Очистить корзину'")
     def click_clear_cart_button(self) -> None:

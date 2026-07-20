@@ -1,8 +1,7 @@
 import pytest
 import allure
-from selenium import webdriver
-from config import UI_BASE_URL, WINDOW_SIZE
-from GoToCartPage import GoToCartPage
+from config import UI_BASE_URL
+from test.ui.pages.GoToCartPage import GoToCartPage
 
 
 @allure.title("Переход в корзину с главной страницы")
@@ -11,11 +10,7 @@ from GoToCartPage import GoToCartPage
 @allure.story("Навигация по сайту")
 @allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.ui
-def test_go_to_cart_page() -> None:
-    options = webdriver.ChromeOptions()
-    options.add_argument(WINDOW_SIZE)
-    driver = webdriver.Chrome(options=options)
-
+def test_go_to_cart_page(driver) -> None:
     navigation = GoToCartPage(driver, UI_BASE_URL)
 
     navigation.open_main_page()
@@ -24,6 +19,3 @@ def test_go_to_cart_page() -> None:
 
     with allure.step("Проверить, что текущий URL содержит подстроку 'cart'"):
         assert "cart" in driver.current_url, f"Тест упал. Текущий URL: {driver.current_url}"
-
-    with allure.step("Закрыть сессию браузера"):
-        driver.quit()
